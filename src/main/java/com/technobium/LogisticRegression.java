@@ -16,6 +16,7 @@ import org.apache.mahout.math.Vector;
 import org.apache.mahout.vectorizer.encoders.ConstantValueEncoder;
 import org.apache.mahout.vectorizer.encoders.StaticWordValueEncoder;
 
+//功能：使用逻辑回归检测汽车行驶里程欺诈，result=0 表示没有欺诈；result=1 表示欺诈
 public class LogisticRegression {
 	public static void main(String[] args) {
 		LogisticRegression logisticRegression = new LogisticRegression();
@@ -26,7 +27,6 @@ public class LogisticRegression {
 
 		// Train a model
 		OnlineLogisticRegression olr = logisticRegression.train(trainingData);
-
 		// Test the model
 		logisticRegression.testModel(olr);
 	}
@@ -88,7 +88,8 @@ public class LogisticRegression {
 		Observation newObservation = new Observation(new String[] { "family",
 				"10", "100000", "0" });
 		Vector result = olr.classifyFull(newObservation.getVector());
-
+		//result=0 表示没有欺诈---》对应的没有被欺诈的可能性为result.get(0)；
+		//result=1 表示欺诈    ---》对应的被欺诈的可能性为result.get(1)
 		System.out.println("------------- Testing -------------");
 		System.out.format("Probability of not fraud (0) = %.3f\n",
 				result.get(0));
