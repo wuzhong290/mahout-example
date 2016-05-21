@@ -1,7 +1,12 @@
 # mahout-logistic-regression
 Apache Mahout logistic regression demo. Code exlained here:
 http://technobium.com/logistic-regression-using-apache-mahout/
+http://blog.trifork.com/2014/02/04/an-introduction-to-mahouts-logistic-regression-sgd-classifier/
+http://svn.apache.org/repos/asf/mahout/trunk/
+Multinomial logistic regression
 
+一、logistic-regression、
+使用条件：仅仅支持二分类
 
 1，根据数据训练生成model
 mahout trainlogistic --input input/donut.csv --output ./model --target color --categories 2 --predictors x y shape color xx xy yy c a b --types numeric numeric numeric numeric numeric numeric numeric numeric numeric numeric --features 100 --passes 100 --rate 100
@@ -84,3 +89,4 @@ System.out.println(sum);
 //评分公式：double s = Math.exp(sum); s / (1.0 + s);  结果为2.293264542791767E-176 接近于零
 s = Math.exp(sum);
 System.out.println(s / (1.0 + s));
+
