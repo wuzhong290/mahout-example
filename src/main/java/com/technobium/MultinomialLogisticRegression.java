@@ -147,10 +147,13 @@ public final class MultinomialLogisticRegression {
         }
 
         Vector vt = lr.classifyFull(v);
+        for (String value : dict.values()){
+          System.out.println("target:"+value);
+        }
+        int t = dict.intern(Iterables.get(values, 4));
 
         int r = vt.maxValueIndex();
-        boolean flag =  r == dict.intern(Iterables.get(values, 4));
-
+        boolean flag =  r == t;
         lr.close();
 
         Closer closer = Closer.create();
