@@ -38,10 +38,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+//多分类的处理
+//训练后的OnlineLogisticRegression序列化到文件中，在使用的时候通过反序列化获取OnlineLogisticRegression
+//Main.java是反序列化获取OnlineLogisticRegression，对未知数据进行评分。
+public final class MultinomialLogisticRegression {
 
-public final class OnlineLogisticRegressionTest {
-
-  private static final Logger logger = LoggerFactory.getLogger(OnlineLogisticRegressionTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(MultinomialLogisticRegression.class);
 
   public static void main(String[] args) throws Exception{
     // this test trains a 3-way classifier on the famous Iris dataset.

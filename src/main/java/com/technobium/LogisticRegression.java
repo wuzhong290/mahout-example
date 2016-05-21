@@ -17,6 +17,7 @@ import org.apache.mahout.vectorizer.encoders.ConstantValueEncoder;
 import org.apache.mahout.vectorizer.encoders.StaticWordValueEncoder;
 
 //功能：使用逻辑回归检测汽车行驶里程欺诈，result=0 表示没有欺诈；result=1 表示欺诈
+//二分类的处理
 public class LogisticRegression {
 	public static void main(String[] args) {
 		LogisticRegression logisticRegression = new LogisticRegression();
