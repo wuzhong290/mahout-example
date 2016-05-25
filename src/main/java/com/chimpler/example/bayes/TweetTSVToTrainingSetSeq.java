@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -73,7 +74,7 @@ public class TweetTSVToTrainingSetSeq {
 		BufferedReader reader = new BufferedReader(new FileReader(tweetsPath));
 		while(true) {
 			String line = reader.readLine();
-			if (line == null) {
+			if (StringUtils.isBlank(line)) {
 				break;
 			}
 			
@@ -85,7 +86,7 @@ public class TweetTSVToTrainingSetSeq {
 			key.set("/" + label + "/" + tweetId);
 
 			Multiset<String> words = ConcurrentHashMultiset.create();
-			
+
 			// extract words from tweet
 			TokenStream ts = analyzer.tokenStream("text", new StringReader(tweet));
 			CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
@@ -102,6 +103,8 @@ public class TweetTSVToTrainingSetSeq {
 					}
 				}
 			}
+			ts.end();
+			ts.close();
 
 			// create vector wordId => weight using tfidf
 			Vector vector = new RandomAccessSparseVector(10000);

@@ -202,4 +202,6 @@ scp root@192.168.120.129:/home/wuzhong/df-count df-count
 3、classify new tweets
 com.chimpler.example.bayes.Classifier input/bayes/model/model input/bayes/model/labelindex input/bayes/model/dictionary.file-0 input/bayes/model/df-count input/bayes/data/tweets-to-classify.tsv
 
+com.chimpler.example.bayes.TopCategoryWords input/bayes/model/model input/bayes/model/labelindex input/bayes/model/dictionary.file-0 input/bayes/model/df-count
 
+com.chimpler.example.bayes.TweetTSVToTrainingSetSeq input/bayes/model/dictionary.file-0 input/bayes/model/df-count input/bayes/data/tweets-train.tsv  tweets-training-set
