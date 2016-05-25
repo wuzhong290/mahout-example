@@ -195,7 +195,7 @@ $ hadoop fs -get tweets-vectors/dictionary.file-0 dictionary.file-0
 $ hadoop fs -getmerge tweets-vectors/df-count df-count
 
 scp root@192.168.120.129:/home/wuzhong/labelindex labelindex
-scp root@192.168.120.129:/home/wuzhong/model model
+scp -r root@192.168.120.129:/home/wuzhong/model model   （model是个文件夹）
 scp root@192.168.120.129:/home/wuzhong/dictionary.file-0 dictionary.file-0
 scp root@192.168.120.129:/home/wuzhong/df-count df-count
 
