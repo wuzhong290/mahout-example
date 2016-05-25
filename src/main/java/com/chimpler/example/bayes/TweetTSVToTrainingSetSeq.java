@@ -88,10 +88,19 @@ public class TweetTSVToTrainingSetSeq {
 			Multiset<String> words = ConcurrentHashMultiset.create();
 
 			// extract words from tweet
+//			The workflow of the new TokenStream API is as follows:
+//			1、Instantiation of TokenStream/TokenFilters which add/get attributes to/from the AttributeSource.
+//			2、The consumer calls reset().
+//			3、The consumer retrieves attributes from the stream and stores local references to all attributes it wants to access.
+//			4、The consumer calls incrementToken() until it returns false consuming the attributes after each call.
+//			5、The consumer calls end() so that any end-of-stream operations can be performed.
+//			6、The consumer calls close() to release any resource when finished using the TokenStream.
 			TokenStream ts = analyzer.tokenStream("text", new StringReader(tweet));
 			CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
+			//2、The consumer calls reset().
 			ts.reset();
 			int wordCount = 0;
+			//4、The consumer calls incrementToken() until it returns false consuming the attributes after each call.
 			while (ts.incrementToken()) {
 				if (termAtt.length() > 0) {
 					String word = ts.getAttribute(CharTermAttribute.class).toString();
@@ -103,7 +112,9 @@ public class TweetTSVToTrainingSetSeq {
 					}
 				}
 			}
+			//5、The consumer calls end() so that any end-of-stream operations can be performed.
 			ts.end();
+			//6、The consumer calls close() to release any resource when finished using the TokenStream.
 			ts.close();
 
 			// create vector wordId => weight using tfidf
