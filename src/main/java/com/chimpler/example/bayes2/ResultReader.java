@@ -57,6 +57,5 @@ public class ResultReader {
 			System.out.println(" => " + labels.get(categoryId));
 		}
 		reader.close();
-
 	}
 }

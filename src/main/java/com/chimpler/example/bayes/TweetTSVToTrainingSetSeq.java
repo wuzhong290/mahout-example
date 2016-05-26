@@ -47,7 +47,7 @@ public class TweetTSVToTrainingSetSeq {
 		return documentFrequency;
 	}
 
-	
+
 	public static void main(String[] args) throws Exception {
 		if (args.length < 4) {
 			System.out.println("Arguments: [dictionnary] [document frequency] [tweet file] [output file]");
@@ -64,7 +64,7 @@ public class TweetTSVToTrainingSetSeq {
 		Map<String, Integer> dictionary = readDictionnary(configuration, new Path(dictionaryPath));
 		Map<Integer, Long> documentFrequency = readDocumentFrequency(configuration, new Path(documentFrequencyPath));
 		int documentCount = documentFrequency.get(-1).intValue();
-		
+
 		Writer writer = new Writer(fs, configuration, new Path(outputFileName),
 				Text.class, VectorWritable.class);
 		Text key = new Text();
@@ -77,30 +77,30 @@ public class TweetTSVToTrainingSetSeq {
 			if (StringUtils.isBlank(line)) {
 				break;
 			}
-			
+
 			String[] tokens = line.split("\t", 3);
 			String label = tokens[0];
 			String tweetId = tokens[1];
 			String tweet = tokens[2];
-			
+
 			key.set("/" + label + "/" + tweetId);
 
 			Multiset<String> words = ConcurrentHashMultiset.create();
 
 			// extract words from tweet
 //			The workflow of the new TokenStream API is as follows:
-//			1¡¢Instantiation of TokenStream/TokenFilters which add/get attributes to/from the AttributeSource.
-//			2¡¢The consumer calls reset().
-//			3¡¢The consumer retrieves attributes from the stream and stores local references to all attributes it wants to access.
-//			4¡¢The consumer calls incrementToken() until it returns false consuming the attributes after each call.
-//			5¡¢The consumer calls end() so that any end-of-stream operations can be performed.
-//			6¡¢The consumer calls close() to release any resource when finished using the TokenStream.
+//			1ã€Instantiation of TokenStream/TokenFilters which add/get attributes to/from the AttributeSource.
+//			2ã€The consumer calls reset().
+//			3ã€The consumer retrieves attributes from the stream and stores local references to all attributes it wants to access.
+//			4ã€The consumer calls incrementToken() until it returns false consuming the attributes after each call.
+//			5ã€The consumer calls end() so that any end-of-stream operations can be performed.
+//			6ã€The consumer calls close() to release any resource when finished using the TokenStream.
 			TokenStream ts = analyzer.tokenStream("text", new StringReader(tweet));
 			CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
-			//2¡¢The consumer calls reset().
+			//2ã€The consumer calls reset().
 			ts.reset();
 			int wordCount = 0;
-			//4¡¢The consumer calls incrementToken() until it returns false consuming the attributes after each call.
+			//4ã€The consumer calls incrementToken() until it returns false consuming the attributes after each call.
 			while (ts.incrementToken()) {
 				if (termAtt.length() > 0) {
 					String word = ts.getAttribute(CharTermAttribute.class).toString();
@@ -112,9 +112,9 @@ public class TweetTSVToTrainingSetSeq {
 					}
 				}
 			}
-			//5¡¢The consumer calls end() so that any end-of-stream operations can be performed.
+			//5ã€The consumer calls end() so that any end-of-stream operations can be performed.
 			ts.end();
-			//6¡¢The consumer calls close() to release any resource when finished using the TokenStream.
+			//6ã€The consumer calls close() to release any resource when finished using the TokenStream.
 			ts.close();
 
 			// create vector wordId => weight using tfidf
@@ -130,7 +130,7 @@ public class TweetTSVToTrainingSetSeq {
 				vector.setQuick(wordId, tfIdfValue);
 			}
 			value.set(vector);
-			
+
 			writer.append(key, value);
 		}
 		analyzer.close();
